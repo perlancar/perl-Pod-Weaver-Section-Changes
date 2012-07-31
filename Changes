@@ -1,5 +1,10 @@
 Revision history for Pod-Weaver-Section-Changes
 
+0.02    2012-07-31 (SHARYANTO)
+
+        - Add config: exclude_files & exclude_modules.
+
+
 0.01    2012-07-31 (SHARYANTO)
 
         First release.
