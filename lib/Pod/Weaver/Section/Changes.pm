@@ -14,6 +14,16 @@ use Pod::Elemental::Element::Nested;
 
 # VERSION
 
+# regex
+has exclude_modules => (
+    is => 'rw',
+    isa => 'Str',
+);
+has exclude_files => (
+    is => 'rw',
+    isa => 'Str',
+);
+
 sub weave_section {
     $log->trace("-> ".__PACKAGE__."::weave_section()");
     my ($self, $document, $input) = @_;
@@ -39,6 +49,27 @@ sub weave_section {
     if ($package ne $main_package) {
         $log->debugf("skipped file %s (not main module)", $filename);
         return;
+    }
+
+    if (defined $self->exclude_files) {
+        my $re = $self->exclude_files;
+        eval { $re = qr/$re/ };
+        $@ and die "Invalid regex in exclude_files: $re";
+        if ($filename =~ $re) {
+            $self->log (["skipped file %s (matched exclude_files)", $filename]);
+            $log->debugf("skipped file %s (matched exclude_files)", $filename);
+            return;
+        }
+    }
+    if (defined $self->exclude_modules) {
+        my $re = $self->exclude_modules;
+        eval { $re = qr/$re/ };
+        $@ and die "Invalid regex in exclude_modules: $re";
+        if ($package =~ $re) {
+            $self->log (["skipped package %s (matched exclude_modules)", $package]);
+            $log->debugf("skipped package %s (matched exclude_modules)", $package);
+            return;
+        }
     }
 
     my $changes;
