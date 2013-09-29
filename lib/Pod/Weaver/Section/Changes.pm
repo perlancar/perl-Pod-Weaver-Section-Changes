@@ -1,6 +1,6 @@
 package Pod::Weaver::Section::Changes;
 
-use 5.010;
+use 5.010001;
 use Moose;
 with 'Pod::Weaver::Role::Section';
 
