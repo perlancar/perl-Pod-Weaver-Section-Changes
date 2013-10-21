@@ -145,8 +145,9 @@ In your C<weaver.ini>:
 
 =head1 DESCRIPTION
 
-Inserting information in distribution's C<Changes> to main module's POD can be a
-convenience for your module users.
+This plugin inserts C<Changes> entries to POD section CHANGES. I used to think
+this is a good idea because I can look at the module's Changes history right
+from the POD. I've since repented :-)
 
 Changes is parsed using L<CPAN::Changes> and markup in text entries are
 currently assumed to be POD too.
