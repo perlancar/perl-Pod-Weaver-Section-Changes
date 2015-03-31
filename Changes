@@ -4,7 +4,7 @@ Revision history for Pod-Weaver-Section-Changes
 
         - No functional changes.
 
-        - [dzil] Fix incomplete list of dependencies [RT#103181].
+        - [build] Fix incomplete list of dependencies [RT#103181].
 
 
 0.02    2012-07-31 (SHARYANTO)
