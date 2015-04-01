@@ -111,13 +111,12 @@ sub weave_section {
         });
     }
 
-    $document->children->push(
+    push @{ $document->children },
         Pod::Elemental::Element::Nested->new({
             command  => 'head1',
             content  => 'CHANGES',
             children => \@content,
-        }),
-    );
+        });
 
     $self->log(["added CHANGES section to %s", $filename]);
 }
