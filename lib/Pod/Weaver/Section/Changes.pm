@@ -1,18 +1,16 @@
 package Pod::Weaver::Section::Changes;
 
+# DATE
+# VERSION
+
 use 5.010001;
 use Moose;
 with 'Pod::Weaver::Role::Section';
 
-use Log::Any '$log';
-
 use Config::INI::Reader;
 use CPAN::Changes;
-use Moose::Autobox;
 use Pod::Elemental;
 use Pod::Elemental::Element::Nested;
-
-# VERSION
 
 # regex
 has exclude_modules => (
@@ -25,7 +23,6 @@ has exclude_files => (
 );
 
 sub weave_section {
-    $log->trace("-> ".__PACKAGE__."::weave_section()");
     my ($self, $document, $input) = @_;
 
     my $filename = $input->{filename} || 'file';
@@ -42,12 +39,12 @@ sub weave_section {
         $package = $1;
         $package =~ s!/!::!g;
     } else {
-        $log->debugf("skipped file %s (not a Perl module)", $filename);
+        $self->log_debug(["skipped file %s (not a Perl module)", $filename]);
         return;
     }
 
     if ($package ne $main_package) {
-        $log->debugf("skipped file %s (not main module)", $filename);
+        $self->log_debug(["skipped file %s (not main module)", $filename]);
         return;
     }
 
@@ -56,8 +53,7 @@ sub weave_section {
         eval { $re = qr/$re/ };
         $@ and die "Invalid regex in exclude_files: $re";
         if ($filename =~ $re) {
-            $self->log (["skipped file %s (matched exclude_files)", $filename]);
-            $log->debugf("skipped file %s (matched exclude_files)", $filename);
+            $self->log_debug(["skipped file %s (matched exclude_files)", $filename]);
             return;
         }
     }
@@ -66,8 +62,7 @@ sub weave_section {
         eval { $re = qr/$re/ };
         $@ and die "Invalid regex in exclude_modules: $re";
         if ($package =~ $re) {
-            $self->log (["skipped package %s (matched exclude_modules)", $package]);
-            $log->debugf("skipped package %s (matched exclude_modules)", $package);
+            $self->log_debug(["skipped package %s (matched exclude_modules)", $package]);
             return;
         }
     }
@@ -81,8 +76,7 @@ sub weave_section {
     }
 
     unless ($changes) {
-        $self->log(["skipped adding CHANGES section to %s (no valid Changes file)", $filename]);
-        $log->infof("skipped adding CHANGES section to %s (no valid Changes file)", $filename );
+        $self->log_debug(["skipped adding CHANGES section to %s (no valid Changes file)", $filename]);
         return;
     }
 
@@ -126,9 +120,6 @@ sub weave_section {
     );
 
     $self->log(["added CHANGES section to %s", $filename]);
-    $log->infof("added CHANGES section to %s", $filename );
-
-    $log->trace("<- ".__PACKAGE__."::weave_section()");
 }
 
 1;
