@@ -1,22 +1,22 @@
-0.04    2015-04-01 (PERLANCAR)
+0.04    2015-04-01  Released-By: PERLANCAR
 
 	- Use the weaver plugin to self, for testing.
 
 	- Remove Moose::Autobox and Log::Any.
 
 
-0.03    2014-04-01 (PERLANCAR)
+0.03    2014-04-01  Released-By: PERLANCAR
 
         - No functional changes.
 
         - [build] Fix incomplete list of dependencies [RT#103181].
 
 
-0.02    2012-07-31 (SHARYANTO)
+0.02    2012-07-31  Released-By: SHARYANTO
 
         - Add config: exclude_files & exclude_modules.
 
 
-0.01    2012-07-31 (SHARYANTO)
+0.01    2012-07-31  Released-By: SHARYANTO
 
         - First release.
